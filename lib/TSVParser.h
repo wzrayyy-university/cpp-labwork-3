@@ -1,9 +1,6 @@
-#ifndef TSV_PARSER_H_
-#define TSV_PARSER_H_
+#pragma once
 
-#include <fstream>
 #include "Types.h"
+#include <fstream>
 
 ParsedTSV ParseTSV(std::ifstream& file);
-
-#endif // TSV_PARSER_H_

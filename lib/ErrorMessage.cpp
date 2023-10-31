@@ -21,20 +21,19 @@ void PrintHelpMessage(bool is_error, const char* filepath) {
 
 void ErrorMessage(ErrorCodes error_code, char* argument, const char* filepath) {
   switch (error_code) {
-    case ErrorCodes::kFilenameMissing: {
-      std::cerr << "ARGUMENT ERROR: Missing filename" << std::endl;
-      break;
-    }
-    case ErrorCodes::kFileUnavailable: {
-      std::cerr << "ERROR: Unable to open " << argument << std::endl;
-      break;
-    }
-    case ErrorCodes::kWrongArgument: {
-      std::cerr << "ARGUMENT ERROR: " << argument << " doesn't exist" << std::endl;
-      break;
-    }
+  case ErrorCodes::kFilenameMissing: {
+    std::cerr << "ARGUMENT ERROR: Missing filename" << std::endl;
+    break;
+  }
+  case ErrorCodes::kFileUnavailable: {
+    std::cerr << "ERROR: Unable to open " << argument << std::endl;
+    break;
+  }
+  case ErrorCodes::kWrongArgument: {
+    std::cerr << "ARGUMENT ERROR: " << argument << " doesn't exist" << std::endl;
+    break;
+  }
   }
   PrintHelpMessage(true, filepath);
   exit(EXIT_FAILURE);
 };
-

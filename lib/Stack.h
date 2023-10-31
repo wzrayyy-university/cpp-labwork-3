@@ -1,5 +1,4 @@
-#ifndef QUEUE_H_
-#define QUEUE_H_
+#pragma once
 
 #include "Types.h"
 
@@ -12,11 +11,10 @@ class Stack {
  private:
   StackMember* first = nullptr;
   std::size_t size = 0;
+
  public:
   void Add(Point point);
   Point Get();
   std::size_t Count() const;
   bool IsEmpty() const;
 };
-
-#endif // QUEUE_H_

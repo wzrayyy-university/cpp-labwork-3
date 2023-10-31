@@ -1,9 +1,8 @@
 #include "ArgumentParser.h"
 
-//#include <>
 #include <cstring>
-#include <string>
 #include <stdexcept>
+#include <string>
 
 #include "ErrorMessage.h"
 
@@ -31,7 +30,7 @@ std::size_t GetValueIndex(const char* str, const Argument arg) {
 
 uint64_t GetNumber(char** argv, int& i, const Argument& arg) {
   std::size_t value_idx = GetValueIndex(argv[i], arg);
-  char* tmp_number;
+  char* tmp_number = nullptr;
   if (argv[i][value_idx] == '\0') {
     tmp_number = argv[++i];
   } else if (argv[i][value_idx] == '=') {

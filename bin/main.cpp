@@ -1,16 +1,10 @@
-#include <iostream>
-#include <fstream>
 #include "lib/ArgumentParser.h"
-#include "lib/TSVParser.h"
 #include "lib/Sandpile.h"
+#include "lib/TSVParser.h"
+#include <fstream>
+#include <iostream>
 
-void PrintInitialValues(PointWithValue* initial_values, std::size_t initial_size) {
-  for (std::size_t i = 0; i < initial_size; ++i) {
-    std::cout << initial_values[i].x << " " << initial_values[i].y << " " << initial_values[i].value << '\n';
-  }
-}
-
-int main( int argc, char** argv ) {
+int main(int argc, char** argv) {
   Config config = ArgumentParser::ParseArguments(argc, argv);
   std::ifstream file(config.input_filename);
   ParsedTSV parsed_tsv = ParseTSV(file);

@@ -1,0 +1,9 @@
+add_library(sandpile
+    ArgumentParser.cpp
+    ErrorMessage.cpp
+    Image.cpp
+    Sandpile.cpp
+    Stack.cpp
+    TSVParser.cpp
+    Types.cpp
+)

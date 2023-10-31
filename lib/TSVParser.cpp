@@ -1,5 +1,5 @@
-#include <limits>
 #include "TSVParser.h"
+#include <limits>
 
 std::size_t GetLinesCount(std::ifstream& file) {
   char _[64];
@@ -33,7 +33,7 @@ ParsedTSV ParseTSV(std::ifstream& file) {
     int16_t idx_x;
     int16_t idx_y;
 
-    PointWithValue point {};
+    PointWithValue point{};
 
     sscanf(line, "%hd %hd %lu", &idx_x, &idx_y, &point.value);
 
@@ -64,17 +64,9 @@ ParsedTSV ParseTSV(std::ifstream& file) {
   offset_values.y = absolute_values.min_y;
   offset_values.x = absolute_values.min_x;
 
-  Size array_dimensions {
-    static_cast<uint16_t>(absolute_values.max_x - absolute_values.min_x + 1),
-    static_cast<uint16_t>(absolute_values.max_y - absolute_values.min_y + 1)
-  };
+  Size array_dimensions{static_cast<uint16_t>(absolute_values.max_x - absolute_values.min_x + 1),
+                        static_cast<uint16_t>(absolute_values.max_y - absolute_values.min_y + 1)};
 
-//  Normalize(points, offset_values, idx);
-  return ParsedTSV {
-    points,
-    absolute_values,
-    offset_values,
-    array_dimensions,
-    idx
-  };
+  //  Normalize(points, offset_values, idx);
+  return ParsedTSV{points, absolute_values, offset_values, array_dimensions, idx};
 }

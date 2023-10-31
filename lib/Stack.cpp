@@ -1,10 +1,7 @@
 #include "Stack.h"
 
 void Stack::Add(Point point) {
-  StackMember* member = new StackMember {
-    point,
-    first
-  };
+  StackMember* member = new StackMember{point, first};
 
   first = member;
   ++size;

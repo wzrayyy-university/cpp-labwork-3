@@ -1,14 +1,10 @@
 #include "Sandpile.h"
 #include <iostream>
 
-Sandpile::Sandpile(PointWithValue* initial_values,
-                   std::size_t initial_values_size,
-                   AbsoluteValues absolute_values)
-  : absolute_values_(absolute_values),
-    initial_values_(initial_values),
-    initial_values_size_(initial_values_size) {
+Sandpile::Sandpile(PointWithValue* initial_values, std::size_t initial_values_size, AbsoluteValues absolute_values)
+    : absolute_values_(absolute_values), initial_values_(initial_values), initial_values_size_(initial_values_size) {
 
-  values_ = new uint8_t* [kFieldSize];
+  values_ = new uint8_t*[kFieldSize];
 
   for (uint16_t i = 0; i < kFieldSize; ++i) {
     values_[i] = new uint8_t[kFieldSize];
@@ -59,10 +55,10 @@ void Sandpile::SetValue(Point point, uint64_t value) {
 
 void Sandpile::Scatter(Point point) {
   ScatteredPoints points = {
-    Point {static_cast<uint16_t>(point.x + 1), point.y},
-    Point {static_cast<uint16_t>(point.x - 1), point.y},
-    Point {point.x, static_cast<uint16_t>(point.y - 1)},
-    Point {point.x, static_cast<uint16_t>(point.y + 1)},
+      Point{static_cast<uint16_t>(point.x + 1), point.y},
+      Point{static_cast<uint16_t>(point.x - 1), point.y},
+      Point{point.x, static_cast<uint16_t>(point.y - 1)},
+      Point{point.x, static_cast<uint16_t>(point.y + 1)},
   };
 
   SetValue(points.right, GetValue(points.right) + 1);
@@ -78,18 +74,18 @@ void Sandpile::Scatter(Point point) {
 bool Sandpile::Iterate() {
   for (uint16_t x = absolute_values_.min_x; x <= absolute_values_.max_x; ++x) {
     for (uint16_t y = absolute_values_.min_y; y <= absolute_values_.max_y; ++y) {
-      Point point {x, y};
+      Point point{x, y};
       if (GetValue(point) >= 4) {
-        queue_.Add(point); // todo dynamically manage the queue
+        stack_.Add(point);
       }
     }
   }
 
-  std::size_t unstable_count = queue_.Count();
+  std::size_t unstable_count = stack_.Count();
 
-  while (!queue_.IsEmpty()) {
-    Point point = queue_.Get();
-   uint64_t value = GetValue(point);
+  while (!stack_.IsEmpty()) {
+    Point point = stack_.Get();
+    uint64_t value = GetValue(point);
 
     SetValue(point, value - 4);
     Scatter(point);
@@ -98,15 +94,23 @@ bool Sandpile::Iterate() {
   return unstable_count;
 }
 
-void Sandpile::PrintCurrentState() {
-  for (uint16_t x = absolute_values_.min_x - 4; x <= absolute_values_.max_x + 4; ++x) {
-    for (uint16_t y = absolute_values_.min_y - 4; y <= absolute_values_.max_y + 4; ++y) {
-      if (values_[x][y] == 0) {
-        std::cout << " 0 ";
-      } else {
-        std::cout << " " << static_cast<uint16_t>(GetValue(Point{x, y})) << " ";
-      }
-    }
-    std::cout << '\n';
-  }
+SandpileState Sandpile::GetCurrentState() {
+  return {
+      .absolute_values_ = absolute_values_,
+      .offset_values_ = offset_values_,
+      .initial_values_ = initial_values_,
+      .initial_values_size_ = initial_values_size_,
+      .stack_ = stack_,
+      .values = values_,
+  };
+  // for (uint16_t x = absolute_values_.min_x - 4; x <= absolute_values_.max_x + 4; ++x) {
+  //   for (uint16_t y = absolute_values_.min_y - 4; y <= absolute_values_.max_y + 4; ++y) {
+  //     if (values_[x][y] == 0) {
+  //       std::cout << " 0 ";
+  //     } else {
+  //       std::cout << " " << static_cast<uint16_t>(GetValue(Point{x, y})) << " ";
+  //     }
+  //   }
+  //   std::cout << '\n';
+  // }
 }

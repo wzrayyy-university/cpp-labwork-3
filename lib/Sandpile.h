@@ -1,16 +1,19 @@
-#ifndef SANDPILE_H_
-#define SANDPILE_H_
+#pragma once
 
-#include <cstdint>
-#include "Types.h"
 #include "Stack.h"
+#include "Types.h"
+#include <cstdint>
 
 static const uint8_t kInitialFlag = 0b10000000;
 static const uint16_t kFieldSize = std::numeric_limits<uint16_t>::max();
 
 struct SandpileState {
+  AbsoluteValues absolute_values_;
+  OffsetValues offset_values_;
+  PointWithValue* initial_values_;
+  std::size_t initial_values_size_;
+  Stack stack_;
   uint8_t** values;
-  std::size_t size;
 };
 
 struct ResizeParams {
@@ -28,20 +31,15 @@ class Sandpile {
   OffsetValues offset_values_;
   PointWithValue* initial_values_;
   std::size_t initial_values_size_;
-  Stack queue_;
+  Stack stack_;
 
-//  ResizeParams GetResizeParams();
   void ResizeToFit(Point point);
   uint64_t GetValue(Point point);
   void SetValue(Point point, uint64_t value);
   void Scatter(Point point);
 
  public:
-  Sandpile(PointWithValue* initial_values,
-           std::size_t initial_values_size,
-           AbsoluteValues absolute_values);
+  Sandpile(PointWithValue* initial_values, std::size_t initial_values_size, AbsoluteValues absolute_values);
   bool Iterate();
-  void PrintCurrentState();
+  SandpileState GetCurrentState();
 };
-
-#endif // SANDPILE_H_

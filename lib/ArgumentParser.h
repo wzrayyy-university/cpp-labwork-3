@@ -1,8 +1,7 @@
-#ifndef ARGUMENT_PARSER_H_
-#define ARGUMENT_PARSER_H_
+#pragma once
 
-#include <limits>
 #include <cstdint>
+#include <limits>
 
 struct Argument {
   const char* short_name;
@@ -18,8 +17,8 @@ struct Arguments {
 };
 
 struct Config {
-  char* input_filename {};
-  char* output_filename {};
+  char* input_filename{};
+  char* output_filename{};
   uint64_t max_iter = std::numeric_limits<uint64_t>::max();
   uint64_t freq = 0;
 };
@@ -28,5 +27,3 @@ class ArgumentParser {
  public:
   static Config ParseArguments(const int argc, char** argv);
 };
-
-#endif // ARGUMENT_PARSER_H_
