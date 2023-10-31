@@ -89,66 +89,14 @@ bool Sandpile::Iterate() {
 
   while (!queue_.IsEmpty()) {
     Point point = queue_.Get();
-    uint64_t value = GetValue(point);
+   uint64_t value = GetValue(point);
 
     SetValue(point, value - 4);
     Scatter(point);
   }
 
   return unstable_count;
-//  ResizeParams resize_params = GetResizeParams();
-//  if (resize_params.is_required) {
-//    ResizeToFit(resize_params);
-//  } // todo resize
 }
-
-//ResizeParams Sandpile::GetResizeParams() {
-//  ResizeParams params;
-//
-//  for (std::size_t i = 1; i < array_dimensions_.x - 1; ++i) {
-//    if (values_[i][0] >= 4) {
-//      params.copy_x = 1;
-//      params.is_required = true;
-//    }
-//    if (values_[i][array_dimensions_.y - 1] >= 4) {
-//      params.resize_x = 1;
-//      params.is_required = true;
-//    }
-//  }
-//
-//  for (std::size_t i = 1; i < array_dimensions_.y - 1; ++i) {
-//    if (values_[0][i] >= 4) {
-//      params.copy_x = 1;
-//      params.is_required = true;
-//    }
-//    if (values_[array_dimensions_.x-1][i] >= 4) {
-//      params.resize_x = 1;
-//      params.is_required = true;
-//    }
-//  }
-//
-//  return params; // fixme THIS DOESN'T WORK PROPERLY, USE JUST FOR TESTING.
-//
-//void Sandpile::ResizeToFit(ResizeParams params) {
-//  uint16_t new_x_size = array_dimensions_.x + params.resize_x + params.copy_x;
-//  uint16_t new_y_size = array_dimensions_.y + params.resize_y + params.copy_y;
-//
-//  uint8_t** tmp = new uint8_t* [new_x_size];
-//
-//  for (uint8_t i = 0; i < )
-//
-//  for (uint16_t i = params.copy_x; i < new_x_size - ; ++i) {
-//    tmp[i] = new uint8_t[new_y_size];
-//    for (uint16_t j = 0; j < new_y_size; ++j) {
-//
-//    }
-//  }
-//
-//  array_dimensions_.x = new_x_size;
-//  array_dimensions_.y = new_y_size;
-//
-//  values_ = tmp;
-//}
 
 void Sandpile::PrintCurrentState() {
   for (uint16_t x = absolute_values_.min_x - 4; x <= absolute_values_.max_x + 4; ++x) {
